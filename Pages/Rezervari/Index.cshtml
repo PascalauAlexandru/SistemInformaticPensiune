@@ -1,0 +1,54 @@
+﻿@page
+@model SistemInformaticPensiune.Pages.Rezervari.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rezervare[0].Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rezervare[0].Camera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rezervare[0].DataInceput)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rezervare[0].DataSfarsit)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Rezervare) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Camera.Numar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInceput)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataSfarsit)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
