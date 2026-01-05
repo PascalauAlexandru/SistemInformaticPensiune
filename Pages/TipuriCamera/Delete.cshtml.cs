@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using SistemInformaticPensiune.Data;
+using SistemInformaticPensiune.Models;
+
+namespace SistemInformaticPensiune.Pages.TipuriCamera
+{
+    public class DeleteModel : PageModel
+    {
+        private readonly SistemInformaticPensiune.Data.SistemInformaticPensiuneContext _context;
+
+        public DeleteModel(SistemInformaticPensiune.Data.SistemInformaticPensiuneContext context)
+        {
+            _context = context;
+        }
+
+        [BindProperty]
+        public TipCamera TipCamera { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tipcamera = await _context.TipCamera.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (tipcamera == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                TipCamera = tipcamera;
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tipcamera = await _context.TipCamera.FindAsync(id);
+            if (tipcamera != null)
+            {
+                TipCamera = tipcamera;
+                _context.TipCamera.Remove(TipCamera);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
+        }
+    }
+}
