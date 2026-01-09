@@ -5,18 +5,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Tipuri camera</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary fw-bold" asp-page="Create">Create New</a>
 </p>
-<table class="table">
+<div class="table-container">
+<table class="table-custom">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.TipCamera[0].Tip)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -26,11 +27,12 @@
                 @Html.DisplayFor(modelItem => item.Tip)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                <a class="link-custom link-animated" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> .
+                <a class="link-custom link-animated" asp-page="./Details" asp-route-id="@item.ID">Details</a> .
+                <a class="link-custom link-animated" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>

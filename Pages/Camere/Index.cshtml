@@ -5,13 +5,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Camere</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary fw-bold" asp-page="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<div class="table-container">
+<table class="table-custom">
+    <thead class="">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Camera[0].Numar)
@@ -22,27 +23,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Camera[0].TipCamera)
             </th>
-            <th></th>
+            <th>
+                <span>Actions</span>
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Camera) {
         <tr>
             <td>
+                <span class="text-primary fw-bold">No. </span>
                 @Html.DisplayFor(modelItem => item.Numar)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
+                <span> RON</span>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TipCamera.Tip)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                <a class="link-custom link-animated" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a class="link-custom link-animated" asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a class="link-custom link-animated" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>

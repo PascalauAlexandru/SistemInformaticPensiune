@@ -48,13 +48,25 @@ namespace SistemInformaticPensiune.Pages.Camere
             {
                 return NotFound();
             }
-
+         
             var camera = await _context.Camera.FindAsync(id);
+
             if (camera != null)
             {
-                Camera = camera;
-                _context.Camera.Remove(Camera);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    Camera = camera;
+                    _context.Camera.Remove(Camera);
+                    await _context.SaveChangesAsync();
+                }catch(Microsoft.EntityFrameworkCore.DbUpdateException)
+                {
+                    ModelState.AddModelError(string.Empty, "Nu se poate sterge această cameraa deoarece este utilizata in alte inregistrari " +
+                        "(ex: Rezervari sau Facilitati). Stergeti intai acele inregistrari.");
+                    Camera = await _context.Camera
+                   .Include(c => c.TipCamera)
+                   .FirstOrDefaultAsync(m => m.ID == id);
+                    return Page();
+                }                
             }
 
             return RedirectToPage("./Index");

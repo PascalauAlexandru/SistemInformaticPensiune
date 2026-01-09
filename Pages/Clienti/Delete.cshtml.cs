@@ -52,9 +52,22 @@ namespace SistemInformaticPensiune.Pages.Clienti
             var client = await _context.Client.FindAsync(id);
             if (client != null)
             {
-                Client = client;
-                _context.Client.Remove(Client);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    Client = client;
+                    _context.Client.Remove(Client);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+                {
+                   
+                   ModelState.AddModelError(string.Empty, "Nu se poate șterge acest client deoarece are rezervări active în sistem. Ștergeți întâi rezervările clientului.");
+
+                    
+                    Client = await _context.Client.FirstOrDefaultAsync(m => m.ID == id);
+
+                    return Page();
+                }
             }
 
             return RedirectToPage("./Index");
